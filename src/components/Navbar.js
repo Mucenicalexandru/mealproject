@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const NavStyle = styled.div`
   background-color: #287ed9;
 `
-
 function Navbar(props) {
 
 
