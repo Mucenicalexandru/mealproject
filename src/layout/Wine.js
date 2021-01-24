@@ -2,8 +2,29 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {Link} from "react-router-dom";
 
+
 const ButtonGroup = styled.div`
-  margin-top: 20px;
+  margin-bottom: 60px;
+ 
+`
+
+const BackgroundColor = styled.div`
+    background: -moz-linear-gradient(to bottom, #FFFFFF, #94f631);
+    background: linear-gradient(to bottom, #FFFFFF, #94f631);
+`
+
+const NameContainer = styled.div`
+   border: solid #c9c1c1 1px;
+   border-radius: 5px;
+   text-align: center;
+   padding: 0;
+   margin-bottom: 40px;
+`
+
+const WineName = styled.h4`
+    color: #0e3102;
+    margin: 0;
+    padding: 10px;
 `
 
 function Wine(props) {
@@ -33,23 +54,43 @@ function Wine(props) {
 
 
 
+
     return (
         <>
+        <BackgroundColor>
+
             <ButtonGroup className="pagination justify-content-center">
                 <div className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" className="btn btn-outline-primary" onClick={() => setWineList(whiteWine)}>White</button>
-                    <button type="button" className="btn btn-outline-primary" onClick={() => setWineList(redWine)}>Red</button>
-                    <button type="button" className="btn btn-outline-primary" onClick={() => setWineList(desertWine)}>Dessert</button>
+                    <button type="button" className="btn btn-outline-success" onClick={() => setWineList(whiteWine)}>White</button>
+                    <button type="button" className="btn btn-outline-success" onClick={() => setWineList(redWine)}>Red</button>
+                    <button type="button" className="btn btn-outline-success" onClick={() => setWineList(desertWine)}>Dessert</button>
                 </div>
             </ButtonGroup>
 
-            <div>
+            <div className='container'>
+                <div className='row'>
                 {wineList.map((wine, index) => {
-                    return <Link to={`/wine/${wine}`}><h2 key={index}>{wine.replace("_", " ")}</h2></Link>
+                    return <NameContainer className='col-6'>
+                        <Link to={`/wine/${wine}`}>
+                            <WineName id={index}
+                                                 onMouseOver={() => {
+                                                        document.getElementById(index).style.color = '#fff';
+                                                        document.getElementById(index).style.backgroundColor = "#289341";
+                                                 }}
+                                                 onMouseOut={() => {
+                                                         document.getElementById(index).style.color = "#0a043c";
+                                                         document.getElementById(index).style.backgroundColor = "initial";
+                                                 }}
+                                                 key={index}>{wine.replace("_", " ").charAt(0).toUpperCase()+wine.replace("_", " ").slice(1)}
+                            </WineName>
+                        </Link>
+                         </NameContainer>
                 })}
+                </div>
             </div>
+        </BackgroundColor>
 
-        </>
+            </>
     );
 }
 

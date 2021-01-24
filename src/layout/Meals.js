@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
 import styled from "styled-components";
+import {properties} from "../properties";
 
 const Input = styled.input`
   margin-top: 10px;
@@ -13,18 +14,26 @@ const Button = styled.button`
   margin-left: 80px;
 `
 
-const Pagination = styled.div`
-margin-top: 20px;
+const Pagination = styled.button`
+  margin : 20px;
+  
+`
+
+const MealDetails = styled.p`
+    font-family: 'Cabin Sketch', cursive;
+    color: #50781b;
+    border-style: double;
+    border-radius: 10px;
+    padding: 5px;
+    width: 140px;
 `
 
 function Meals(props) {
 
+
     const [mealList, setMealList] = useState([]);
     const [ingredient, setIngredient] = useState('');
     const [page, setPage] = useState(0);
-
-    const key = '1dfec2d9def1413d92b176006307e197';
-    const anotherKey = '1689071996f543429fedccf5f0885331';
 
     const handleChange = (e) => {
         e.preventDefault();
@@ -32,7 +41,7 @@ function Meals(props) {
     }
 
     useEffect(() => {
-        axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${anotherKey}&query=${ingredient}&number=12&offset=${page}`)
+        axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${properties.forthKey}&query=${ingredient}&number=12&offset=${page}`)
             .then(response => {
                 setMealList(response.data.results)
             })
@@ -41,7 +50,7 @@ function Meals(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${anotherKey}&query=${ingredient}&number=12&offset=${page}`)
+        axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${properties.forthKey}&query=${ingredient}&number=12&offset=${page}`)
             .then(response => {
                 setMealList(response.data.results)
             })
@@ -76,7 +85,7 @@ function Meals(props) {
                             <img src={meal.image} className="card-img-top" alt="..."/>
                             <div className="card-body">
                                 <h5 className="card-title">{meal.title}</h5>
-                                <Link to={`/meal/${meal.id}`}><p key={index}>See meal details</p></Link>
+                                <Link to={`/meal/${meal.id}`}><MealDetails key={index}>See meal details</MealDetails></Link>
                             </div>
                         </div>
                     </div>
@@ -84,13 +93,16 @@ function Meals(props) {
             </div>
 
             <div>
-                <button onClick={previousPage} className="btn btn-primary">
-                    Previous
-                </button>
-                <button onClick={nextPage} className="btn btn-primary">
-                    Next
-                </button>
+                    <Pagination onClick={previousPage} className="btn btn-outline-success">
+                        Previous
+                    </Pagination>
+
+                    <Pagination onClick={nextPage} className="btn btn-outline-success">
+                        Next
+                    </Pagination>
+
             </div>
+
 
         </>
 
